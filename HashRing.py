@@ -5,18 +5,18 @@ def hash_value(text):
     return int(hashlib.md5(text.encode()).hexdigest(), 16) % (2**32)
 
 class ChatLoadBalancer:
+
+#initialises our ring
     def __init__(self, replicas=3):
         self.ring = []
         self.position_server = {}
         self.replicas = replicas
-
     def add_server(self, server_id):
         for i in range(self.replicas):
             vnode = f"{server_id}:{i}"
             position = hash_value(vnode)
             insort(self.ring, position)
             self.position_server[position] = server_id
-
     def remove_server(self, server_id):
         for i in range(self.replicas):
             vnode = f"{server_id}:{i}"
