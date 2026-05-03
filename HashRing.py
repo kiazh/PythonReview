@@ -24,7 +24,6 @@ class ChatLoadBalancer:
             if position in self.position_server:
                 del self.position_server[position]
                 self.ring.remove(position)
-
     def get_server(self, chat_id):
         if not self.ring:
             return None
